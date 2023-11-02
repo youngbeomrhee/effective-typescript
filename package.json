@@ -1,0 +1,8 @@
+{
+  "name": "effective-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/youngbeomrhee/effective-typescript.git",
+  "author": "이영범 <youngbeomrhee@zigbang.com>",
+  "license": "MIT"
+}
