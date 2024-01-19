@@ -1,8 +1,16 @@
 {
-  "name": "effective-typescript",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/youngbeomrhee/effective-typescript.git",
-  "author": "이영범 <youngbeomrhee@zigbang.com>",
-  "license": "MIT"
+    "name": "effective-typescript",
+    "packageManager": "yarn@4.0.2",
+    "devDependencies": {
+        "@types/eslint": "^8",
+        "@typescript-eslint/eslint-plugin": "^6.19.0",
+        "@typescript-eslint/parser": "^6.19.0",
+        "@typescript/analyze-trace": "^0.10.1",
+        "eslint": "^8.56.0",
+        "prettier": "^3.2.4",
+        "typescript": "^5.3.3"
+    },
+    "scripts": {
+        "watch": "tsc --watch"
+    }
 }
