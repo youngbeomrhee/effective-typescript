@@ -95,7 +95,7 @@ interface Vector3D extends Vector2D {
     type IsSubset4 = IsSubset<AC_INTERSECTION_BC, BC>; // true
 
     // 할당 가능성을 통한 확인
-    // 참고 : TypeScript에서 한 타입이 다른 특정 타입에 할당 가능(assignable)하다는 것은,
+    // 참고) 할당 가능성: TypeScript에서 한 타입이 다른 특정 타입에 할당 가능(assignable)하다는 것은,
     // 첫 번째 타입의 인스턴스가 두 번째 타입의 변수나 상수에 안전하게 할당될 수 있음을 의미.
     // 이는 첫 번째 타입이 두 번째 타입의 모든 요구사항(필수 속성과 메서드 타입)을 만족시키는 경우에 가능
     let ac: AC = { a: 1, c: 3 };
@@ -130,6 +130,41 @@ interface Vector3D extends Vector2D {
     const aUnionB6: AC_UNION_BC = { a: 1, c: 3 };
     const aUnionB7: AC_UNION_BC = { b: 2, c: 3 };
     const aUnionB8: AC_UNION_BC = { a: 1, b: 2, c: 3 };
+
+    // 참고: 구조적 타이핑과 교집합
+    interface Worker {
+        id: number;
+        work(): void;
+    }
+
+    interface Manager {
+        id: number;
+        manage(): void;
+    }
+
+    // Worker와 Manager의 교집합 타입
+    type WorkerManager = Worker & Manager;
+
+    let worker: Worker = { id: 1, work: () => true };
+    let manager: Manager = { id: 2, manage: () => true };
+    let workerManager: WorkerManager = {
+        id: 1,
+        work: () => true,
+        manage: () => true,
+    };
+    worker = workerManager; // workerManager는 worker의 모든 요구사항(id와 work())을 충족하므로 할당 가능
+    workerManager = worker;
+    /*
+    Type 'Worker' is not assignable to type 'WorkerManager'.
+        Property 'manage' is missing in type 'Worker' but required in type 'Manager'.ts
+    */
+    manager = workerManager; // workerManager는 manager의 모든 요구사항(id와 manage())을 충족하므로 할당 가능
+    workerManager = manager;
+    /*
+    Type 'Manager' is not assignable to type 'WorkerManager'.
+        Property 'work' is missing in type 'Manager' but required in type 'Worker'.
+    */
+    // 위의 할당 가능성 참고
 }
 {
     // extends는 상속의 개념보다는 부분집합의 개념이다
