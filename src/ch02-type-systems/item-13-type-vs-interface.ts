@@ -32,6 +32,10 @@
         (x: number): string;
     }
 
+    const fn: TFn = (x) => '';
+
+    const fn2: TFn = (x) => '';
+
     type TFnWithProp = {
         (x: number): string;
         prop: string;
@@ -153,6 +157,4 @@
             population: 500000,
         };
     }
-}
-{
 }

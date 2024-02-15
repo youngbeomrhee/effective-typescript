@@ -52,7 +52,6 @@
         userId: string;
         pageTitle: string;
         recentFiles: string[];
-        pageContents: string;
     }
 
     interface TopNavState {
@@ -77,6 +76,7 @@
     };
 
     // Pick을 활용하는 방법
+    // type TopNavState3 = Pick<State, 'userId' | 'pageTitle' | 'recentFiles'>;
     type TopNavState3 = Pick<State, 'userId' | 'pageTitle' | 'recentFiles'>;
 
     /** 태그된 유니온에서의 중복 */
@@ -146,12 +146,6 @@
     }
 
     /** */
-    const INIT_OPTIONS = {
-        width: 640,
-        height: 480,
-        color: '#00FF00',
-        label: 'VGA',
-    };
     function getUserInfo(userId: string) {
         const name = 'Bob';
         const age = 12;
