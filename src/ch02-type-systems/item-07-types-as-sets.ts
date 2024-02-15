@@ -65,35 +65,68 @@ interface Vector3D extends Vector2D {
     z: number;
 }
 
-// 인터섹션(intersection, 교집합)
-// 추가적인 속성을 가지는 값도
+// intersection(교집합), union(합집합)
 {
-    type A = {
+    type AC = {
         a: number;
+        c: number;
     };
 
-    type B = {
+    type BC = {
         b: number;
+        c: number;
     };
 
-    type AandB = A & B;
-    type AorB = A | B;
+    type C = {
+        c: number;
+    };
 
-    const aAndB: AandB = { a: 1, b: 2 };
-    const aOrB: AorB = { a: 1 };
-    const aOrB2: AorB = { b: 2 };
-    const aOrB3: AorB = { a: 1, b: 2 };
+    // intersection
+    type AC_INTERSECTION_BC = AC & BC;
 
-    // aAndB는 A와 B의 부분집합
-    // A 타입에 aAndB 할당
-    const a: A = aAndB; // No error
+    type IsSubset<T, U> = T extends U ? true : false;
 
-    // B 타입에 aAndB 할당
-    const b: B = aAndB; // No error
+    // 교집합인 경우 A와 B의 공통 프로퍼티인 c만 가져야 된다고 착각할 수 있지만 a, b, c 모두 있어야 AC의 부분집합이면서 동시에 BC의 부분집합일 수 있다
+    // extends를 통한 확인
+    type IsSubset1 = IsSubset<C, AC>; // false
+    type IsSubset2 = IsSubset<C, BC>; // false
 
-    // A와 B는 AorB의 부분집합
-    const aOrB4: AorB = a;
-    const aOrB5: AorB = b;
+    type IsSubset3 = IsSubset<AC_INTERSECTION_BC, AC>; // true
+    type IsSubset4 = IsSubset<AC_INTERSECTION_BC, BC>; // true
+
+    // 할당 가능성을 통한 확인
+    let ac: AC = { a: 1, c: 3 };
+    let bc: BC = { b: 2, c: 3 };
+    let c: C = { c: 3 };
+    let ac_intersection_bc: AC_INTERSECTION_BC = { a: 1, b: 2, c: 3 };
+
+    ac = c; // Property 'a' is missing in type 'C' but required in type 'AC'.ts(2741)
+    c = ac; // c에 ac 할당 가능 -> ac가 c의 부분집합
+
+    ac = ac_intersection_bc;
+    ac_intersection_bc = ac;
+    /**
+        Type 'AC' is not assignable to type 'AC_INTERSECTION_BC'.
+            Property 'b' is missing in type 'AC' but required in type 'BC'.ts(2322)
+     */
+    // ac_intersection_bc가 ac에 할당 가능하므로 ac_intersection_bc가 ac의 부분집합
+    // bc도 동일
+
+    // union
+    type AC_UNION_BC = AC | BC;
+
+    // extends를 통한 확인
+    type IsSubset5 = IsSubset<AC, AC_UNION_BC>; // true
+    type IsSubset6 = IsSubset<BC, AC_UNION_BC>; // true
+
+    // 할당을 통한 확인
+    const aUnionB4: AC_UNION_BC = ac;
+    const aUnionB5: AC_UNION_BC = bc;
+
+    // 참고: 합집합이기 때문에 AC, BC 혹은 둘의 조합 모두 가능
+    const aUnionB6: AC_UNION_BC = { a: 1, c: 3 };
+    const aUnionB7: AC_UNION_BC = { b: 2, c: 3 };
+    const aUnionB8: AC_UNION_BC = { a: 1, b: 2, c: 3 };
 }
 {
     // extends는 상속의 개념보다는 부분집합의 개념이다
@@ -164,4 +197,52 @@ interface Vector3D extends Vector2D {
     const t: T = new Date();
     type NonZeroNums = Exclude<number, 0>;
     const nonZeroNum: NonZeroNums = 0;
+}
+{
+    /**
+    집합론으로 이해하는 타입스크립트
+    https://itchallenger.tistory.com/874
+    */
+    /** boolean */
+    // intersection: 교집합
+    type falseAndtrue = false & true; // never
+    type booleanAndTrue = boolean & true; // true (전체집합인 boolean은 교집합의 항등원) (항등원: 다른 요소와 연산을 수행했을 때 다른 요소를 변경하지 않고 그대로 반환하는 요소)
+    type bool = true | false;
+    type booleanAndTrue2 = bool & true; // true
+    type trueAndNever = true & never; // never
+
+    // Exclude: 차집합
+    type excludeBooleanTrue = Exclude<boolean, true>; // false
+    type excludeBooleanFalse = Exclude<boolean, false>; // true
+
+    // Union: 합집합
+    type trueOrNever = true | never; // true
+    type booleanOrTrue = boolean | true; // boolean
+
+    // extends: 부분집합 (is subset of, is sub-type of)
+    type A = boolean extends never ? true : false; // false
+    type B = true extends boolean ? true : false; // true
+    type C = never extends false ? true : false; // true
+    type D = never extends never ? true : false; // true
+
+    type T1 = 0 | 1 extends 0 ? true : false; // false (0 | 1은 0의 부분집합이 아님)
+    type T2 = 0 extends 0 | 1 ? true : false; // true (0은 0 | 1의 부분집합)
+
+    type T3<T extends string> = T extends `prefix${infer Rest}` ? Rest : T;
+
+    const t3: T3<'a'> = 'a';
+
+    /** string */
+    type aaOrAb = 'aa' | 'ab'; // "aa" | "ab"
+    type aaAndAb = 'aa' & 'ab'; // never (not 'a')
+    type aLiteralAndALiteral = `a{string}` & `a{number}`; // never (not 'a')
+
+    /** object */
+    // 상단의 intersection(교집합), union(합집합) 참고
+
+    /** interface와 object 타입 */
+    const x: {} = 9;
+    type O = {};
+    const o: O = 9;
+    type numKey = keyof number;
 }
