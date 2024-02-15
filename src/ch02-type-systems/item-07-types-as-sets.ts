@@ -95,6 +95,9 @@ interface Vector3D extends Vector2D {
     type IsSubset4 = IsSubset<AC_INTERSECTION_BC, BC>; // true
 
     // 할당 가능성을 통한 확인
+    // 참고 : TypeScript에서 한 타입이 다른 특정 타입에 할당 가능(assignable)하다는 것은,
+    // 첫 번째 타입의 인스턴스가 두 번째 타입의 변수나 상수에 안전하게 할당될 수 있음을 의미.
+    // 이는 첫 번째 타입이 두 번째 타입의 모든 요구사항(필수 속성과 메서드 타입)을 만족시키는 경우에 가능
     let ac: AC = { a: 1, c: 3 };
     let bc: BC = { b: 2, c: 3 };
     let c: C = { c: 3 };
@@ -244,5 +247,6 @@ interface Vector3D extends Vector2D {
     const x: {} = 9;
     type O = {};
     const o: O = 9;
+    const x2: { toString(): string } = 9;
     type numKey = keyof number;
 }
