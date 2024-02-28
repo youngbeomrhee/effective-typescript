@@ -109,7 +109,7 @@
     Symbol() + undefined;
     Symbol() + null;
     Symbol() + true;
-    Symbol() + ''; // 가능
+    Symbol() + ''; // 불가능
     Symbol() + Symbol();
     Symbol() + 1;
     Symbol() + BigInt(1);
