@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import zipObject from 'lodash/zipObject';
 
 {
     const csvData = '...';
@@ -26,7 +26,7 @@ import _ from 'lodash';
     // 라이브러리 사용
     const rows = rawRows
         .slice(1)
-        .map((rowStr) => _.zipObject(headers, rowStr.split(',')));
+        .map((rowStr) => zipObject(headers, rowStr.split(',')));
 }
 interface BasketballPlayer {
     name: string;
