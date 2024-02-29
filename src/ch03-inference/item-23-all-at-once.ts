@@ -35,30 +35,20 @@ const president: {
 }
 */
 
-let president4: {
-    middle?: string;
-    first: string;
-    last: string;
+declare let hasDates: boolean;
+const nameTitle = { name: 'Khufu', title: 'Pharaoh' };
+const pharaoh = {
+    ...nameTitle,
+    ...(hasDates ? { start: -2589, end: -2566 } : {}),
 };
-// 선택적 필드로 정의되지 않음
-let president2:
-    | {
-          middle: string;
-          first: string;
-          last: string;
-      }
-    | {
-          first: string;
-          last: string;
-      };
-president2.middle;
-
-// 선택적 필드로 만들기 위해 헬퍼 함수를 사용
-function addOptional<T extends object, U extends object>(
-    a: T,
-    b: U | null
-): T & Partial<U> {
-    return { ...a, ...b };
+pharaoh.start;
+/*
+const pharaoh: {
+    start?: number | undefined;
+    end?: number | undefined;
+    name: string;
+    title: string;
 }
-const president3 = addOptional(firstLast, hasMiddle ? { middle: 'S' } : null);
-president3.middle;
+*/
+// 책에서 나온대로 타입이 유니온으로 추론되지 않는다.
+// 논리적으로 봐도 위에 나온 타입에 안전한 방식으로 조건부 속성을 추가하는 president 예제와 동일한 구조인데 다른 결과가 나올 수 없다.
