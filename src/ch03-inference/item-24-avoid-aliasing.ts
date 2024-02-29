@@ -24,6 +24,7 @@ if (!bbox) {
 }
 
 function fn(p: Polygon) {
+    delete p.bbox;
     /* ... */
 }
 
