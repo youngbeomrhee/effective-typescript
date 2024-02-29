@@ -3,6 +3,7 @@
     "packageManager": "yarn@4.0.2",
     "devDependencies": {
         "@types/eslint": "^8",
+        "@types/lodash": "^4.14.202",
         "@typescript-eslint/eslint-plugin": "^6.19.0",
         "@typescript-eslint/parser": "^6.19.0",
         "@typescript/analyze-trace": "^0.10.1",
@@ -12,5 +13,8 @@
     },
     "scripts": {
         "watch": "tsc --watch"
+    },
+    "dependencies": {
+        "lodash": "^4.17.21"
     }
 }
