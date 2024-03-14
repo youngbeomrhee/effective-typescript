@@ -1,0 +1,21 @@
+{
+    "name": "ch04-design",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "graphql-codegen": "graphql-codegen",
+        "json2ts": "json2ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@graphql-codegen/cli": "^5.0.2",
+        "@graphql-codegen/typescript": "^4.0.6",
+        "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+        "@graphql-codegen/typescript-operations": "^4.2.0",
+        "json-schema-to-typescript": "^13.1.2"
+    }
+}
