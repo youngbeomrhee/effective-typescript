@@ -44,6 +44,8 @@
     });
 }
 declare function makeButton(props: { text: string; onClick: () => void }): void;
+declare let el: HTMLElement;
+
 {
     {
         // this가 의도한대로 binding 되지 않는 예제
