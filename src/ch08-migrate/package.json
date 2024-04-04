@@ -1,0 +1,16 @@
+{
+  "name": "ch08-migrate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "item-58-write-modern-js.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.5.29",
+    "@types/sizzle": "^2.3.8"
+  }
+}
